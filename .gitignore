@@ -1,0 +1,10 @@
+.gradle
+.idea
+elasticsearch-zookeeper-based-discovery-plugin.iml
+.project
+.settings
+.java-version
+build/
+settings.gradle
+src/main/main.iml
+

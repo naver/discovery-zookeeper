@@ -1,0 +1,75 @@
+/*
+ * Licensed to Elasticsearch under one or more contributor
+ * license agreements. See the NOTICE file distributed with
+ * this work for additional information regarding copyright
+ * ownership. Elasticsearch licenses this file to you under
+ * the Apache License, Version 2.0 (the "License"); you may
+ * not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            name 'sonatype-snapshots'
+            url "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+        jcenter()
+    }
+    dependencies {
+        classpath "org.elasticsearch.gradle:build-tools:6.7.1"
+    }
+}
+
+group = 'org.elasticsearch.plugin'
+version = '6.7.1'
+
+apply plugin: 'java'
+apply plugin: 'elasticsearch.esplugin'
+apply plugin: 'idea'
+
+esplugin {
+    description 'Discovery zookeeper plugin enables unicast discovery from hosts stored in a zookeeper.'
+    name 'discovery-zookeeper'
+    classname 'org.elasticsearch.discovery.zookeeper.ZookeeperBasedDiscoveryPlugin'
+    version '0.0.1'
+}
+
+dependencies {
+    compile 'org.apache.zookeeper:zookeeper:3.4.14'
+    compile 'org.slf4j:slf4j-api:1.7.25'
+    compile 'org.slf4j:slf4j-log4j12:1.7.25'
+}
+
+//// no unit tests
+//
+//
+// skip license header checks
+licenseHeaders.enabled = false
+//
+// use elasticsearch checkstyle rules
+checkstyleTest.enabled = true
+//
+// FIXME dependency license check needs to be enabled.
+licenseFile = rootProject.file('../LICENSE')
+noticeFile = rootProject.file('README.md')
+dependencyLicenses.enabled = false
+//
+// FIXME thirdparty audit needs to be enabled.
+thirdPartyAudit.enabled = false
+//
+unitTest.enabled = false
+integTestRunner.enabled = false
+
+
+// https://github.com/elastic/elasticsearch/blob/master/buildSrc/src/main/groovy/org/elasticsearch/gradle/test/ClusterFormationTasks.groovy

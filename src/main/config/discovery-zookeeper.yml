@@ -1,0 +1,2 @@
+discovery.zookeeper.quorum: localhost:2181
+discovery.zookeeper.znode.parent: /elasticsearch/discovery
