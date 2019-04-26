@@ -88,6 +88,7 @@ build/distributions/discovery-zookeeper-6.7.1.zip
 If you need another version, make an issue or contribute it(!) please. :)
 
 |discovery-zookeeper|elasticsearch|zookeeper|
+|---|---|---|
 |0.0.1|6.7.1|3.4.14|
 
 ## LICENSE
