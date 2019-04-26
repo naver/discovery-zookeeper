@@ -89,7 +89,7 @@ If you need another version, make an issue or contribute it(!) please. :)
 
 |discovery-zookeeper|elasticsearch|zookeeper|
 |---|---|---|
-|0.0.1|6.7.1|3.4.14|
+|0.0.2|6.7.1|3.4.14|
 
 ## LICENSE
 
