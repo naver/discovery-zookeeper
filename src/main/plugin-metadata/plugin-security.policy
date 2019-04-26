@@ -19,4 +19,5 @@
 
 grant {
   permission javax.security.auth.AuthPermission "getLoginConfiguration";
+  permission java.net.SocketPermission "*", "connect,resolve";
 };
