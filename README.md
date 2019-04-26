@@ -47,6 +47,8 @@ discovery.zookeeper.quorum: zk01.example.com:2181,zk02.example.com:2181,zk03.exa
 discovery.zookeeper.znode.parent: /some/path/to/use/as/znode/parent
 ```
 
+Caution: Current version 0.0.2 discovery-zookeeper plugin does not set znode data. It just reads znode data. You need to deal with how to set znode data with "{host}:{transport_tcp_port}".
+
 ## build environment
 
 - target ES: 6.7.1
