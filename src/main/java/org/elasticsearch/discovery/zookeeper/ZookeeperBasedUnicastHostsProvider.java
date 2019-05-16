@@ -90,7 +90,7 @@ class ZookeeperBasedUnicastHostsProvider implements UnicastHostsProvider {
             for (String child : children){
                 byte[] data = zk.getData(this.znodeParent + '/' + child);
                 String host = new String(data, "UTF-8");
-                if(Pattern.matches("^[a-zA-Z0-9.]+:[0-9]+$", host)) {
+                if (Pattern.matches("^[a-zA-Z0-9.-]+:[0-9]+$", host)) {
                     logger.info("Found: " + host);
                     hostsList.add(host);
                 } else {
