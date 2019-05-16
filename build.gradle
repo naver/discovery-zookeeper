@@ -42,7 +42,7 @@ esplugin {
     description 'Discovery zookeeper plugin enables unicast discovery from hosts stored in a zookeeper.'
     name 'discovery-zookeeper'
     classname 'org.elasticsearch.discovery.zookeeper.ZookeeperBasedDiscoveryPlugin'
-    version '0.0.2'
+    version '0.0.3'
 }
 
 dependencies {
