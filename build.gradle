@@ -27,12 +27,12 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath "org.elasticsearch.gradle:build-tools:6.7.1"
+        classpath "org.elasticsearch.gradle:build-tools:7.3.2"
     }
 }
 
 group = 'org.elasticsearch.plugin'
-version = '6.7.1'
+version = '7.3.2'
 
 apply plugin: 'java'
 apply plugin: 'elasticsearch.esplugin'
@@ -42,13 +42,14 @@ esplugin {
     description 'Discovery zookeeper plugin enables unicast discovery from hosts stored in a zookeeper.'
     name 'discovery-zookeeper'
     classname 'org.elasticsearch.discovery.zookeeper.ZookeeperBasedDiscoveryPlugin'
-    version '0.0.3'
+    version '1.0.0'
 }
 
 dependencies {
     compile 'org.apache.zookeeper:zookeeper:3.4.14'
     compile 'org.slf4j:slf4j-api:1.7.25'
     compile 'org.slf4j:slf4j-log4j12:1.7.25'
+    compile 'log4j:log4j:1.2.17'
 }
 
 //// no unit tests
@@ -68,8 +69,7 @@ dependencyLicenses.enabled = false
 // FIXME thirdparty audit needs to be enabled.
 thirdPartyAudit.enabled = false
 //
-unitTest.enabled = false
 integTestRunner.enabled = false
-
+testingConventions.enabled = false
 
 // https://github.com/elastic/elasticsearch/blob/master/buildSrc/src/main/groovy/org/elasticsearch/gradle/test/ClusterFormationTasks.groovy

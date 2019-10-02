@@ -28,10 +28,10 @@ import org.apache.logging.log4j.Logger;
 
 import org.elasticsearch.common.network.NetworkService;
 import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.discovery.zen.UnicastHostsProvider;
 import org.elasticsearch.env.Environment;
 import org.elasticsearch.plugins.DiscoveryPlugin;
 import org.elasticsearch.plugins.Plugin;
+import org.elasticsearch.discovery.SeedHostsProvider;
 import org.elasticsearch.transport.TransportService;
 import java.nio.file.Path;
 import java.util.Collections;
@@ -41,8 +41,8 @@ import java.util.function.Supplier;
 
 /**
  * Plugin for providing zookeeper-based unicast hosts discovery. The list of unicast hosts
- * is obtained by reading znodes' data on zookeeper with {@link ZookeeperBasedUnicastHostsProvider#QUORUM_SETTING}.
- * Znodes are located below {@link ZookeeperBasedUnicastHostsProvider#ZNODE_PARENT_SETTING}.
+ * is obtained by reading znodes' data on zookeeper with {@link ZookeeperBasedSeedHostsProvider#QUORUM_SETTING}.
+ * Znodes are located below {@link ZookeeperBasedSeedHostsProvider#ZNODE_PARENT_SETTING}.
  * Each znode has data which is {hostname}:{transport_tcp_port} pair.
  */
 public class ZookeeperBasedDiscoveryPlugin extends Plugin implements DiscoveryPlugin {
@@ -59,11 +59,11 @@ public class ZookeeperBasedDiscoveryPlugin extends Plugin implements DiscoveryPl
     }
 
     @Override
-    public Map<String, Supplier<UnicastHostsProvider>> getZenHostsProviders(TransportService transportService,
+    public Map<String, Supplier<SeedHostsProvider>> getSeedHostProviders(TransportService transportService,
                                                                             NetworkService networkService) {
         return Collections.singletonMap(
             "zookeeper",
-            () -> new ZookeeperBasedUnicastHostsProvider(
+            () -> new ZookeeperBasedSeedHostsProvider(
                     new Environment(settings, configPath), transportService));
     }
 }
