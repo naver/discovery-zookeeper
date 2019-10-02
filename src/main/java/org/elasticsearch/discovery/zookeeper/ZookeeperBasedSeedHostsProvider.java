@@ -31,7 +31,7 @@ import org.elasticsearch.common.settings.Setting;
 import org.elasticsearch.common.settings.Setting.Property;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.TransportAddress;
-import org.elasticsearch.discovery.zen.UnicastHostsProvider;
+import org.elasticsearch.discovery.SeedHostsProvider;
 import org.elasticsearch.env.Environment;
 import org.elasticsearch.transport.TransportService;
 
@@ -44,7 +44,7 @@ import java.util.regex.Pattern;
 
 
 /**
- * An implementation of {@link UnicastHostsProvider} that reads {hostname:transport_tcp_port} data on each znode.
+ * An implementation of {@link SeedHostsProvider} that reads {hostname:transport_tcp_port} data on each znode.
  * Znodes are descendants of znode parent {@link #ZNODE_PARENT_SETTING}.
  *
  * Each unicast {hostname:transport_tcp_port} pair that is part of the discovery process must be stored on znode data.  Example znode data:
@@ -52,8 +52,8 @@ import java.util.regex.Pattern;
  * 67.81.244.11:9305
  * 67.81.244.15:9400
  */
-class ZookeeperBasedUnicastHostsProvider implements UnicastHostsProvider {
-    private static final Logger logger = LogManager.getLogger(ZookeeperBasedUnicastHostsProvider.class);
+class ZookeeperBasedSeedHostsProvider implements SeedHostsProvider {
+    private static final Logger logger = LogManager.getLogger(ZookeeperBasedSeedHostsProvider.class);
     private static final String DEFAULT_ZNODE_PARENT = "/elasticsearch/discovery";
     private static final Setting<String> QUORUM_SETTING = Setting.simpleString(
             "discovery.zookeeper.quorum", "localhost:2181", Property.NodeScope);
@@ -63,7 +63,7 @@ class ZookeeperBasedUnicastHostsProvider implements UnicastHostsProvider {
     private final String quorum;
     private final String znodeParent;
 
-    ZookeeperBasedUnicastHostsProvider(Environment environment, TransportService transportService) {
+    ZookeeperBasedSeedHostsProvider(Environment environment, TransportService transportService) {
         // https://github.com/elastic/elasticsearch/blob/master/plugins/
         // examples/custom-settings/src/main/java/org/elasticsearch/example/customsettings/ExampleCustomSettingsConfig.java
         final Settings settings = environment.settings();
@@ -110,9 +110,9 @@ class ZookeeperBasedUnicastHostsProvider implements UnicastHostsProvider {
     }
 
     @Override
-    public List<TransportAddress> buildDynamicHosts(HostsResolver hostsResolver) {
+    public List<TransportAddress> getSeedAddresses(HostsResolver hostsResolver) {
         try {
-            final List<TransportAddress> transportAddresses = hostsResolver.resolveHosts(getHostsList(), 1);
+            final List<TransportAddress> transportAddresses = hostsResolver.resolveHosts(getHostsList());
             return transportAddresses;
         } catch (InterruptedException | KeeperException e) {
             logger.info("Failed to get node information from zookeeper in buildDynamicHosts.");
