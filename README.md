@@ -77,6 +77,7 @@ If you need another version, make an issue or contribute it(!) please. :)
 |---|---|---|
 |0.0.3|6.7.1|3.4.14|
 |1.0.0|7.3.2|3.4.14|
+|1.0.0|7.8.1|3.4.14|
 
 ## LICENSE
 
